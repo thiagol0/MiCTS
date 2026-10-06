@@ -32,7 +32,7 @@ class CSMSHooker {
 
         @SuppressLint("PrivateApi")
         fun startContextualSearch(entryPoint: Int): Boolean {
-            var hooks = mutableListOf<HookHandle>()
+            val hooks = mutableListOf<HookHandle>()
             return runCatching {
                 hooks += module!!.hook(enforcePermission!!).intercept(EnforcePermissionHooker())
                 hooks += module!!.hook(getContextualSearchPackageName!!).intercept(GetCSPackageNameHooker())

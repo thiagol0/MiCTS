@@ -78,9 +78,10 @@ class NavStubViewHooker {
                         0 -> view.postDelayed(mCheckLongPress, ViewConfiguration.getLongPressTimeout().toLong()) // DOWN
                         2 -> { // HOLD
                             if (abs(mCurrX.getFloat(chain.thisObject) - mInitX.getFloat(chain.thisObject)) > 4 ||
-                                abs(mCurrY.getFloat(chain.thisObject) - mInitY.getFloat(chain.thisObject)) > 4)
+                                abs(mCurrY.getFloat(chain.thisObject) - mInitY.getFloat(chain.thisObject)) > 4
+                            ) {
                                 view.removeCallbacks(mCheckLongPress)
-                            else {}
+                            }
                         }
                         else -> view.removeCallbacks(mCheckLongPress)
                     }

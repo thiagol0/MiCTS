@@ -27,7 +27,18 @@ class VIMSHooker {
             val rString = param.classLoader.loadClass("com.android.internal.R\$string")
             contextualSearchKey = rString.getField("config_defaultContextualSearchKey").getInt(null)
             contextualSearchPackageName = rString.getField("config_defaultContextualSearchPackageName").getInt(null)
-            module!!.hook(vimsStub.getDeclaredMethod("showSessionFromSession", IBinder::class.java, Bundle::class.java, Int::class.java, String::class.java)).intercept(ShowSessionHooker())
+            val showSession = runCatching {
+                vimsStub.getDeclaredMethod("showSessionFromSession", IBinder::class.java, Bundle::class.java, Int::class.java, String::class.java)
+            }.getOrElse {
+                // Signature changed in this Android version: fall back to a lookup by name and shape
+                vimsStub.declaredMethods.firstOrNull { m ->
+                    m.name == "showSessionFromSession" &&
+                        m.parameterTypes.size >= 3 &&
+                        m.parameterTypes[0] == IBinder::class.java &&
+                        m.parameterTypes[1] == Bundle::class.java
+                } ?: throw it
+            }
+            module!!.hook(showSession).intercept(ShowSessionHooker())
         }
 
         class ShowSessionHooker : Hooker {
