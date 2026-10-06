@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tile_label">Circule para pesquisar</string>
+    <string name="xposed_description">Ative o Circule para pesquisar em qualquer dispositivo Android 9–16</string>
+    <string name="title_activity_settings">Configurações</string>
+    <string name="trigger_failed">Falha ao acionar!</string>
+    <string name="app_settings">Configurações do app</string>
+    <string name="default_trigger_delay">Atraso de acionamento padrão</string>
+    <string name="tile_trigger_delay">Atraso de acionamento do bloco</string>
+    <string name="vibrate">Vibrar</string>
+    <string name="async_trigger">Acionamento assíncrono</string>
+    <string name="module_settings">Configurações do módulo</string>
+    <string name="access_xposed_service_failed">Falha ao acessar o serviço Xposed</string>
+    <string name="system_trigger_service">Serviço de acionamento do sistema</string>
+    <string name="trigger_by_long_press_home_button">Acionar ao manter pressionado o botão Início</string>
+    <string name="trigger_by_long_press_gesture_handle">Acionar ao manter pressionada a barra de gestos</string>
+    <string name="device_spoof_for_google">Simular dispositivo para o Google</string>
+    <string name="manufacturer">Fabricante</string>
+    <string name="brand">Marca</string>
+    <string name="model">Modelo</string>
+    <string name="device">Dispositivo</string>
+    <string name="about">Sobre</string>
+    <string name="language">Idioma</string>
+    <string name="follow_system">Seguir o sistema</string>
+</resources>
