@@ -42,7 +42,16 @@ fun triggerCircleToSearch(entryPoint: Int, context: Context?, vibrate: Boolean):
         val iVimsClass = Class.forName("com.android.internal.app.IVoiceInteractionManagerService")
         val vis = Class.forName("android.os.ServiceManager").getMethod("getService", String::class.java).invoke(null, "voiceinteraction")
         val vims = Class.forName("com.android.internal.app.IVoiceInteractionManagerService\$Stub").getMethod("asInterface", IBinder::class.java).invoke(null, vis)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+        // The signature of showSessionFromSession differs between Android versions
+        // (and some ROMs), so pick the arguments from the actual parameter count.
+        val paramCount = HiddenApiBypass.getDeclaredMethods(iVimsClass)
+            .filter { it.name == "showSessionFromSession" }
+            .map { it.parameterCount }
+            .let { counts ->
+                counts.firstOrNull { it == 4 || it == 3 }
+                    ?: if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) 4 else 3
+            }
+        if (paramCount >= 4) {
             HiddenApiBypass.invoke(iVimsClass, vims, "showSessionFromSession", null, bundle, 7, "hyperOS_home") as Boolean
         } else {
             HiddenApiBypass.invoke(iVimsClass, vims, "showSessionFromSession", null, bundle, 7) as Boolean
