@@ -95,19 +95,20 @@ class ModuleMain : XposedModule() {
             }
             "com.google.android.googlequicksearchbox" -> {
                 if (!prefs.getBoolean(KEY_DEVICE_SPOOF, DEFAULT_CONFIG[KEY_DEVICE_SPOOF] as Boolean)) return
-                val buildClass = param.classLoader.loadClass("android.os.Build")
-                val MANUFACTURER = buildClass.getDeclaredField("MANUFACTURER")
-                MANUFACTURER.isAccessible = true
-                MANUFACTURER.set(null, prefs.getString(KEY_SPOOF_MANUFACTURER, DEFAULT_CONFIG[KEY_SPOOF_MANUFACTURER] as String))
-                val BRAND = buildClass.getDeclaredField("BRAND")
-                BRAND.isAccessible = true
-                BRAND.set(null, prefs.getString(KEY_SPOOF_BRAND, DEFAULT_CONFIG[KEY_SPOOF_BRAND] as String))
-                val MODEL = buildClass.getDeclaredField("MODEL")
-                MODEL.isAccessible = true
-                MODEL.set(null, prefs.getString(KEY_SPOOF_MODEL, DEFAULT_CONFIG[KEY_SPOOF_MODEL] as String))
-                val DEVICE = buildClass.getDeclaredField("DEVICE")
-                DEVICE.isAccessible = true
-                DEVICE.set(null, prefs.getString(KEY_SPOOF_DEVICE, DEFAULT_CONFIG[KEY_SPOOF_DEVICE] as String))
+                runCatching {
+                    val buildClass = param.classLoader.loadClass("android.os.Build")
+                    mapOf(
+                        "MANUFACTURER" to KEY_SPOOF_MANUFACTURER,
+                        "BRAND" to KEY_SPOOF_BRAND,
+                        "MODEL" to KEY_SPOOF_MODEL,
+                        "DEVICE" to KEY_SPOOF_DEVICE,
+                    ).forEach { (field, key) ->
+                        buildClass.getDeclaredField(field).apply { isAccessible = true }
+                            .set(null, prefs.getString(key, DEFAULT_CONFIG[key] as String))
+                    }
+                }.onFailure { e ->
+                    log(Log.ERROR, "MiCTS", "spoof device fail", e)
+                }
             }
             "com.android.systemui" -> {
                 if (Build.MANUFACTURER != "meizu") return
