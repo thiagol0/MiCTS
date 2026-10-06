@@ -41,11 +41,6 @@ android {
         }
     }
 
-    buildFeatures {
-        buildConfig = true
-        resValues = true
-    }
-
     flavorDimensions += "app"
 
     productFlavors {
@@ -68,6 +63,7 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+        resValues = true
     }
 }
 
