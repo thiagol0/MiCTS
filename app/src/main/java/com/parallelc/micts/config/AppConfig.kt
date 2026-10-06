@@ -12,6 +12,7 @@ enum class Language(val id: Int, val toLocale: () -> Locale) {
     Japanese(R.string.japanese, { Locale.JAPANESE }),
     Odia(R.string.odia, { Locale("or") }),
     Persian(R.string.persian, { Locale("fa") }),
+    PortugueseBrazil(R.string.portuguese_brazil, { Locale("pt", "BR") }),
     Russian(R.string.russian, { Locale("ru") }),
     Spanish(R.string.spanish, { Locale("es") }),
     Turkish(R.string.turkish, { Locale("tr") }),
