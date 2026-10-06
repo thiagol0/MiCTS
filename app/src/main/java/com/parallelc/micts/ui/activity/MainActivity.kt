@@ -67,8 +67,7 @@ fun triggerCircleToSearch(entryPoint: Int, context: Context?, vibrate: Boolean):
         }
     }.onFailure { e ->
         lastTriggerFailure = generateSequence<Throwable>(e) { it.cause }
-            .joinToString("
-  caused by ") { "${it.javaClass.name}: ${it.message}" }
+            .joinToString(" <- ") { "${it.javaClass.name}: ${it.message}" }
         val errMsg = "triggerCircleToSearch invoke omni failed: " + e.stackTraceToString()
         module?.log(Log.ERROR, LOG_TAG, errMsg) ?: Log.e(LOG_TAG, errMsg)
     }.getOrDefault(false)
