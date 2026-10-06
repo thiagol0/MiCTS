@@ -4,6 +4,7 @@
     <string name="xposed_description">Ative o Circule para pesquisar em qualquer dispositivo Android 9–16</string>
     <string name="title_activity_settings">Configurações</string>
     <string name="trigger_failed">Falha ao acionar!</string>
+    <string name="copy_details">Copiar detalhes</string>
     <string name="app_settings">Configurações do app</string>
     <string name="default_trigger_delay">Atraso de acionamento padrão</string>
     <string name="tile_trigger_delay">Atraso de acionamento do bloco</string>
